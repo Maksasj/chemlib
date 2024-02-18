@@ -1,0 +1,1 @@
+add_library(chemcore STATIC chemcore.c)

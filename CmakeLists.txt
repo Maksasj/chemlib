@@ -2,3 +2,5 @@ cmake_minimum_required(VERSION 3.21)
 project(chemlib)
 
 add_subdirectory(src)
+
+add_subdirectory(test)

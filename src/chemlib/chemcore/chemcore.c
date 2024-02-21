@@ -25,17 +25,28 @@ const AtomRecord atomRegistry[2] = {
     }
 };
 
-Atom chemlib_create_atom(Element element) {
-    return atomRegistry[element].atom;
+Atom* chemlib_create_atom(Element element) {
+    Atom* atom = (Atom*) malloc(sizeof(Atom));
+
+    *atom = atomRegistry[element].atom;
+
+    return atom;
 }
 
-AtomStack chemlib_create_atom_stack(Element element, unsigned int count) {
-    AtomStack stack = {
-        .atom = chemlib_create_atom(element),
-        .count = count
-    };
+AtomStack* chemlib_create_atom_stack(Element element, unsigned int count) {
+    AtomStack* stack = (AtomStack*) malloc(sizeof(AtomStack));
+
+    stack->atom = atomRegistry[element].atom;
+    stack->count = count;
 
     return stack;
+}
+
+void chemlib_free_atom(Atom* atom) {
+    free(atom);
+}
+void chemlib_free_atom_stack(AtomStack* stack) {
+    free(stack);
 }
 
 char* chemlib_stringify_atom(Atom* atom) {

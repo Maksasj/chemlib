@@ -26,8 +26,11 @@ typedef struct AtomStack {
 
 extern const AtomRecord atomRegistry[2];
 
-Atom chemlib_create_atom(Element element);
-AtomStack chemlib_create_atom_stack(Element element, unsigned int count);
+Atom* chemlib_create_atom(Element element);
+AtomStack* chemlib_create_atom_stack(Element element, unsigned int count);
+
+void chemlib_free_atom(Atom* atom);
+void chemlib_free_atom_stack(AtomStack* stack);
 
 char* chemlib_stringify_atom(Atom* atom);
 char* chemlib_stringify_atom_stack(AtomStack* atom);

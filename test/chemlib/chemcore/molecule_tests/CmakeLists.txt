@@ -1,0 +1,6 @@
+add_executable(chemcore_molecule_parse_test_0 molecule_parse_test_0.c)
+target_link_libraries(chemcore_molecule_parse_test_0 chemcore)
+
+enable_testing()
+
+add_test(NAME chemcore_molecule_parse_test_0 COMMAND $<TARGET_FILE:chemcore_molecule_parse_test_0>)

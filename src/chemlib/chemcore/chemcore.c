@@ -4,7 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 
-const AtomRecord atomRegistry[2] = {
+const AtomRecord atomRegistry[CHEMLIB_ATOM_REGISTRY_SIZE] = {
     [HYDROGEN] = {
         .name = "hydrogen",
         .symbol = "H",
@@ -24,6 +24,25 @@ const AtomRecord atomRegistry[2] = {
         }
     }
 };
+
+int chemlib_utils_is_digit(char character) {
+    if(character < '0') return 0;
+    if(character > '9') return 0;
+
+    return 1;
+}
+int chemlib_utils_is_uppercase(char character) {
+    if(character < 'A') return 0;
+    if(character > 'Z') return 0;
+
+    return 1;
+}
+int chemlib_utils_is_lowercase(char character) {
+    if(character < 'a') return 0;
+    if(character > 'z') return 0;
+
+    return 1;
+}
 
 Atom* chemlib_create_atom(Element element) {
     Atom* atom = (Atom*) malloc(sizeof(Atom));
@@ -47,6 +66,27 @@ void chemlib_free_atom(Atom* atom) {
 }
 void chemlib_free_atom_stack(AtomStack* stack) {
     free(stack);
+}
+
+Atom* chemlib_parse_atom(char* string) {
+    unsigned int length = strlen(string);
+
+    if(length > 2)
+        return NULL;
+
+    for(int i = 0; i < CHEMLIB_ATOM_REGISTRY_SIZE; ++i) {
+        const AtomRecord* record = &atomRegistry[i];
+
+        if(strcmp(record->symbol, string) == 0) {
+            return chemlib_create_atom(i);
+        }
+    }
+
+    return NULL;
+}
+
+AtomStack* chemlib_parse_atom_stack(char* string) {
+    return NULL;
 }
 
 char* chemlib_stringify_atom(Atom* atom) {

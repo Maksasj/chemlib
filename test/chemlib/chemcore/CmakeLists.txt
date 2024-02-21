@@ -1,1 +1,4 @@
+add_subdirectory(utils_tests)
+
 add_subdirectory(atom_tests)
+add_subdirectory(molecule_tests)

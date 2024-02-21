@@ -1,6 +1,10 @@
 add_executable(chemcore_atom_parse_test_0 atom_parse_test_0.c)
 target_link_libraries(chemcore_atom_parse_test_0 chemcore)
 
+add_executable(chemcore_atom_parse_test_1 atom_parse_test_1.c)
+target_link_libraries(chemcore_atom_parse_test_1 chemcore)
+
 enable_testing()
 
 add_test(NAME chemcore_atom_parse_test_0 COMMAND $<TARGET_FILE:chemcore_atom_parse_test_0>)
+add_test(NAME chemcore_atom_parse_test_1 COMMAND $<TARGET_FILE:chemcore_atom_parse_test_1>)

@@ -1,11 +1,6 @@
 #ifndef _CHEMCORE_H_
 #define _CHEMCORE_H_
 
-typedef enum ParticleType {
-    ATOM,
-    MOLECULE
-} ParticleType;
-
 typedef enum Element {
     HYDROGEN = 0,
     OXYGEN = 1
@@ -21,8 +16,7 @@ typedef struct Atom {
 typedef struct AtomRecord {
     const char* name;
     const char* symbol;
-
-    Atom atom;
+    const Atom atom;
 } AtomRecord;
 
 typedef struct AtomStack {
@@ -30,16 +24,13 @@ typedef struct AtomStack {
     unsigned int count;
 } AtomStack;
 
-typedef struct Molecule {
-    AtomStack* atoms;
-
-    unsigned int atomStackCount;
-} Molecule;
-
-extern AtomRecord atomRegistry[2];
+extern const AtomRecord atomRegistry[2];
 
 Atom chemlib_create_atom(Element element);
 AtomStack chemlib_create_atom_stack(Element element, unsigned int count);
+
+char* chemlib_stringify_atom(Atom* atom);
+char* chemlib_stringify_atom_stack(AtomStack* atom);
 
 // void molecule_add_atom(Molecule* molecule, Atom* atom);
 //

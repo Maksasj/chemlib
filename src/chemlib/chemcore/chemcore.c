@@ -14,6 +14,15 @@ const AtomRecord atomRegistry[CHEMLIB_ATOM_REGISTRY_SIZE] = {
             .charge = 1.0
         }
     },
+    [HELIUM] = {
+            .name = "helium",
+            .symbol = "He",
+            .atom = {
+                    .element = HELIUM,
+                    .mass = 0.0,
+                    .charge = 1.0
+            }
+    },
     [OXYGEN] = {
         .name = "oxygen",
         .symbol = "O",
@@ -61,11 +70,20 @@ AtomStack* chemlib_create_atom_stack(Element element, unsigned int count) {
     return stack;
 }
 
+AtomStack* chemlib_create_atom_stack_from_atom(Atom* atom, unsigned int count) {
+    if(atom == NULL)
+        return NULL;
+
+    return chemlib_create_atom_stack(atom->element, count);
+}
+
 void chemlib_free_atom(Atom* atom) {
-    free(atom);
+    if(atom != NULL)
+        free(atom);
 }
 void chemlib_free_atom_stack(AtomStack* stack) {
-    free(stack);
+    if(stack != NULL)
+        free(stack);
 }
 
 Atom* chemlib_parse_atom(char* string) {
@@ -85,8 +103,58 @@ Atom* chemlib_parse_atom(char* string) {
     return NULL;
 }
 
+AtomStack* chemlib_parse_atom_stack_count(char* string, unsigned int count) {
+    if(string == NULL)
+        return NULL;
+
+    Atom* atom = chemlib_parse_atom(string);
+    AtomStack* stack = chemlib_create_atom_stack_from_atom(atom, count);
+    chemlib_free_atom(atom);
+
+    return stack;
+}
+
 AtomStack* chemlib_parse_atom_stack(char* string) {
-    return NULL;
+    if(!chemlib_utils_is_uppercase(string[0]))
+        return NULL;
+
+    AtomStack* stack = NULL;
+
+    if(chemlib_utils_is_lowercase(string[1])) {
+        char* sub = (char*) malloc(2 + 1);
+
+        memcpy(sub, string, 2);
+        sub[2] = '\0';
+
+        if(chemlib_utils_is_digit(string[2])) {
+            unsigned int count = strtoul(string + 2, NULL, 10);
+            stack = chemlib_parse_atom_stack_count(sub, count);
+        } else {
+            stack = chemlib_parse_atom_stack_count(sub, 1);
+        }
+
+        printf("aaaa");
+
+
+        free(sub);
+    } else if(chemlib_utils_is_digit(string[1])) {
+        char* sub = (char*) malloc(1 + 1);
+
+        sub[0] = string[0];
+        sub[1] = '\0';
+
+        unsigned int count = strtoul(string + 1, NULL, 10);
+
+        stack = chemlib_parse_atom_stack_count(sub, count);
+        free(sub);
+    } else if(string[1] == '\0'){
+        stack = chemlib_parse_atom_stack_count(string, 1);
+    } else {
+        return NULL;
+    }
+
+
+    return stack;
 }
 
 char* chemlib_stringify_atom(Atom* atom) {

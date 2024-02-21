@@ -4,7 +4,8 @@
 
 typedef enum Element {
     HYDROGEN = 0,
-    OXYGEN = 1
+    HELIUM = 1,
+    OXYGEN = 2
 } Element;
 
 typedef struct Atom {
@@ -25,7 +26,7 @@ typedef struct AtomStack {
     unsigned int count;
 } AtomStack;
 
-#define CHEMLIB_ATOM_REGISTRY_SIZE 2
+#define CHEMLIB_ATOM_REGISTRY_SIZE 3
 extern const AtomRecord atomRegistry[CHEMLIB_ATOM_REGISTRY_SIZE];
 
 int chemlib_utils_is_digit(char character);
@@ -34,11 +35,13 @@ int chemlib_utils_is_lowercase(char character);
 
 Atom* chemlib_create_atom(Element element);
 AtomStack* chemlib_create_atom_stack(Element element, unsigned int count);
+AtomStack* chemlib_create_atom_stack_from_atom(Atom* atom, unsigned int count);
 
 void chemlib_free_atom(Atom* atom);
 void chemlib_free_atom_stack(AtomStack* stack);
 
 Atom* chemlib_parse_atom(char* string);
+AtomStack* chemlib_parse_atom_stack_count(char* string, unsigned int count);
 AtomStack* chemlib_parse_atom_stack(char* string);
 
 char* chemlib_stringify_atom(Atom* atom);

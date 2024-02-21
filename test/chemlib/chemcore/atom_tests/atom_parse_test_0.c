@@ -50,6 +50,17 @@ int main() {
     }
 
     TEST_CASE {
+        Atom* atom = chemlib_create_atom(HELIUM);
+
+        char* string = chemlib_stringify_atom(atom);
+
+        ensure(strcmp(string, "He") == 0);
+
+        free(string);
+        chemlib_free_atom(atom);
+    }
+
+    TEST_CASE {
         AtomStack* stack = chemlib_create_atom_stack(HYDROGEN, 2);
 
         char* string = chemlib_stringify_atom_stack(stack);
@@ -77,6 +88,17 @@ int main() {
         char* string = chemlib_stringify_atom_stack(stack);
 
         ensure(strcmp(string, "H4294967295") == 0);
+
+        free(string);
+        chemlib_free_atom_stack(stack);
+    }
+
+    TEST_CASE {
+        AtomStack* stack = chemlib_create_atom_stack(HELIUM, 4294967295);
+
+        char* string = chemlib_stringify_atom_stack(stack);
+
+        ensure(strcmp(string, "He4294967295") == 0);
 
         free(string);
         chemlib_free_atom_stack(stack);

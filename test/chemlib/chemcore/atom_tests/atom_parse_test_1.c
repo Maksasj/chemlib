@@ -52,6 +52,77 @@ int main() {
     TEST_CASE {
         AtomStack* stack = chemlib_parse_atom_stack("H2");
 
+        ensure(stack != NULL);
+
+        ensure(stack->atom.element == HYDROGEN);
+        ensure(stack->count == 2);
+
+        chemlib_free_atom_stack(stack);
+    }
+
+    TEST_CASE {
+        AtomStack* stack = chemlib_parse_atom_stack("H4294967295");
+
+        ensure(stack != NULL);
+
+        ensure(stack->atom.element == HYDROGEN);
+        ensure(stack->count == 4294967295);
+
+        chemlib_free_atom_stack(stack);
+    }
+
+    TEST_CASE {
+        AtomStack* stack = chemlib_parse_atom_stack("O16");
+
+        ensure(stack != NULL);
+
+        ensure(stack->atom.element == OXYGEN);
+        ensure(stack->count == 16);
+
+        chemlib_free_atom_stack(stack);
+    }
+
+    TEST_CASE {
+        AtomStack* stack = chemlib_parse_atom_stack("He16");
+
+        ensure(stack != NULL);
+
+        ensure(stack->atom.element == HELIUM);
+        ensure(stack->count == 16);
+
+        chemlib_free_atom_stack(stack);
+    }
+
+    TEST_CASE {
+        AtomStack* stack = chemlib_parse_atom_stack("He");
+
+        ensure(stack != NULL);
+
+        ensure(stack->atom.element == HELIUM);
+        ensure(stack->count == 1);
+
+        chemlib_free_atom_stack(stack);
+    }
+
+    TEST_CASE {
+        AtomStack* stack = chemlib_parse_atom_stack("H");
+
+        ensure(stack != NULL);
+
+        ensure(stack->atom.element == HYDROGEN);
+        ensure(stack->count == 1);
+
+        chemlib_free_atom_stack(stack);
+    }
+
+    TEST_CASE {
+        AtomStack* stack = chemlib_parse_atom_stack("O2");
+
+        ensure(stack != NULL);
+
+        ensure(stack->atom.element == OXYGEN);
+        ensure(stack->count == 2);
+
         chemlib_free_atom_stack(stack);
     }
 
